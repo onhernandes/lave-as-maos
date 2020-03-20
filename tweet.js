@@ -6,8 +6,8 @@ const client = new Twitter({
   access_token_key: config.accessTokenKey,
   access_token_secret: config.accessTokenSecret
 })
+const moment = require('moment-timezone')
 
-let index = 0
 const messages = [
   'Lave as mãos!',
   'HORA DE LAVAR AS MÃOS',
@@ -32,23 +32,10 @@ const messages = [
 ]
 
 module.exports = async () => {
+  const index = Math.floor(Math.random() * messages.length)
   const message = messages[index]
-  index = index + 1
 
-  if (index === messages.length) {
-    index = 0
-  }
-
-  const date = new Date()
-  date.setTime(
-    date.getTime() - (date.getTimezoneOffset() * 60 * 3000)
-  )
-  const day = date.getDate()
-  const month = date.getMonth()
-  const year = date.getFullYear()
-  const hour = date.getHours()
-  const minutes = date.getMinutes()
-  const dateString = `às ${hour}:${minutes}, ${day}/${month}/${year}`
+  const dateString = `às ${moment().tz('America/Sao_Paulo').format('HH:mm, DD/MM/YYYY')}`
   const status = `${message}\nLembrete ${dateString}`
   return client.post('statuses/update', { status })
 }

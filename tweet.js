@@ -7,21 +7,36 @@ const client = new Twitter({
   access_token_secret: config.accessTokenSecret
 })
 
-const defaultMessages = [
+let index = 0
+const messages = [
   'Lave as mãos!',
   'HORA DE LAVAR AS MÃOS',
   'WASH YOUR FUCKING HANDS BITCH',
   'PARA TUDO E VAI LAVAR AS MÃOS CACETE',
-  'NÃO É PRA SAIR DE CASA, VAI LAVAR AS MÃOS'
+  'NÃO É PRA SAIR DE CASA, VAI LAVAR AS MÃOS',
+  `
+  - vc ama seu amigo?
+  - sim
+  - e vc ja falou pra ele lavar as mãos?
+  - não
+  - e vc ama seu amg????
+  `,
+  `para de esperar ela te responder e vai lavar as mao
+    seja gado mas seja um gado sem corona vairus
+  `,
+  'vc ja parou pra pensar que vc DEVIA LAVAR SUAS MAOS AGORA',
+  'O DIA TA LINDO P VC IR LAVA AS MAO',
+  'se vc ta lendo isso VAI lavar as mao agora',
+  'quem lava as mao = vai pro ceu',
+  'vc devia sei la lavar as mao q tal?'
 ]
 
-let messages = defaultMessages.map(i => i)
-
 module.exports = async () => {
-  const message = messages.shift()
+  const message = messages[index]
+  index = index + 1
 
-  if (messages.length === 0) {
-    messages = defaultMessages.map(i => i)
+  if (index === messages.length) {
+    index = 0
   }
 
   const date = new Date()

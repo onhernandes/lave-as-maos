@@ -6,7 +6,7 @@ const client = new Twitter({
   access_token_key: config.accessTokenKey,
   access_token_secret: config.accessTokenSecret
 })
-const moment = require('moment-timezone')
+const { formatToTimeZone } = require('date-fns-timezone')
 
 const messages = [
   'Lave as mãos!',
@@ -35,7 +35,9 @@ module.exports = async () => {
   const index = Math.floor(Math.random() * messages.length)
   const message = messages[index]
 
-  const dateString = `às ${moment().tz('America/Sao_Paulo').format('HH:mm, DD/MM/YYYY')}`
+  const format = 'HH:mm, DD/MM/YYYY'
+  const date = formatToTimeZone(new Date(), format, { timeZone: 'America/Sao_Paulo' })
+  const dateString = `às ${date}`
   const status = `${message}\nLembrete ${dateString}`
   return client.post('statuses/update', { status })
 }

@@ -39,11 +39,5 @@ module.exports = async () => {
   const date = formatToTimeZone(new Date(), format, { timeZone: 'America/Sao_Paulo' })
   const dateString = `às ${date}`
   const status = `${message}\nLembrete ${dateString}`
-  console.log({
-    consumer_key: config.consumerKey,
-    consumer_secret: config.consumerSecret,
-    access_token_key: config.accessTokenKey,
-    access_token_secret: config.accessTokenSecret
-  })
   return client.post('statuses/update', { status })
 }
